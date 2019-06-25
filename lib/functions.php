@@ -31,7 +31,7 @@ function getDropDown($fieldName, $tableName, $previousValue)
 
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $query = "SELECT DISTINCT " . $fieldName . " FROM " . $tableName . " ORDER BY " . $fieldName . " ASC";
-    echo "\n--> " . $query . "\n";
+    //echo "\n--> " . $query . "\n";
     $result = $pdo->query($query);
     $result->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -64,7 +64,7 @@ function getDropDown($fieldName, $tableName, $previousValue)
                 if ($val == $previousValue) {
                     $extra = "selected";
                 }
-                if (! in_array($val, $alreadyFound)) { // don't add duplicate values to the list
+                if (! in_array($val, $alreadyFound) && ($val != "")) { // don't add duplicate or blank values to the list
                     if ($key == $fieldName) {
                         echo "<option name=\"" . $fieldName . "\" value=\"" . htmlspecialchars($val) . "\" " . $extra . ">" . htmlspecialchars($val) . "</option>\n";
                     } else {
@@ -389,10 +389,10 @@ function displayAnimalTable()
     echo "<table id=\"maintable\" class=\"display compact\">\n";
     echo "<thead>";
     echo "<tr>
-    		<th>Select</th> <th>ID</th> <th>Investigator</th> <th>Tag Number</th> 
-    		<th>Species</th> <th>Class</th> <th>Sex</th> <th>Strain</th> <th>Genotype</th> 
-    		<th>Litter ID</th> <th>Parent Pair</th> <th>Birth Date</th> <th>Wean Date</th> 
-    		<th>Tag Date</th> <th>Deceased</th> <th>Transferred</th> 
+    		<th class=\"animals\">Select</th> <th class=\"animals\">ID</th> <th class=\"animals\">Investigator</th> <th class=\"animals\">Tag<br>Number</th> 
+    		<th class=\"animals\">Species</th> <th class=\"animals\">Class</th> <th class=\"animals\">Sex</th> <th class=\"animals\">Strain</th> <th class=\"animals\">Genotype</th> 
+    		<th class=\"animals\">Litter<br>ID</th> <th class=\"animals\">Parent<br>Pair</th> <th class=\"animals\">Birth<br>Date</th> <th class=\"animals\">Wean<br>Date</th> 
+    		<th class=\"animals\">Tag<br>Date</th> <th class=\"animals\">Deceased</th> <th class=\"animals\">Transferred</th> 
     	  </tr>\n";
     echo "</thead>
 	<tbody>";
@@ -420,7 +420,8 @@ function displayAnimalTable()
                 $tag_date = $row["tag_date"];
                 $deceased = $row["deceased"];
                 $transferred = $row["transferred"];
-
+                $comments = $row["comments"];
+                
                 if ($deceased == 1) {
                     $strDeceased = "Yes";
                 } else {
@@ -462,23 +463,23 @@ function displayAnimalTable()
                 $litterID = $row5["litterID"];
                 $parentPair = $row5["breedingPair"];
 
-                echo "<tr>\n";
-                echo "<td><input type=\"radio\" name=\"rowselect\" value=\"" . htmlspecialchars($animalID) . "\"></td>\n";
-                echo "<td>" . $animalID . "</td>\n";
-                echo "<td>" . $lastName . $firstName . "</td>\n";
-                echo "<td>" . $tagNumber . "</td>\n";
-                echo "<td>" . $species . "</td>\n";
-                echo "<td>" . $classification . "</td>\n";
-                echo "<td>" . $sex . "</td>\n";
-                echo "<td>" . $strain . "</td>\n";
-                echo "<td>" . $genotype . "</td\n>";
-                echo "<td>" . $litterID . "</td>\n";
-                echo "<td>" . $parentPair . "</td>\n";
-                echo "<td>" . $birth_date . "</td>\n";
-                echo "<td>" . $wean_date . "</td>\n";
-                echo "<td>" . $tag_date . "</td>\n";
-                echo "<td>" . $strDeceased . "</td>\n";
-                echo "<td>" . $strTransferred . "</td>\n";
+                echo "<tr title=\"Animal Notes: " . $comments . "\">\n";
+                echo "<td style=\"text-align: center;\"><input type=\"radio\" name=\"rowselect\" value=\"" . htmlspecialchars($animalID) . "\"></td>\n";
+                echo "<td style=\"text-align: center;\">" . $animalID . "</td>\n";
+                echo "<td style=\"text-align: left;\">" . $lastName . $firstName . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $tagNumber . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $species . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $classification . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $sex . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strain . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $genotype . "</td\n>";
+                echo "<td style=\"text-align: center;\">" . $litterID . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $parentPair . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $birth_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $wean_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $tag_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strDeceased . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strTransferred . "</td>\n";
                 echo "</tr>\n";
             }
         }
@@ -486,7 +487,7 @@ function displayAnimalTable()
 
         $query1 = "SELECT * FROM `filtered_return` " . $animalList;
 
-        echo "\n<br>SQL Query Debug --> <strong>" . $query1 . "</strong>\n<br><br>";
+        echo "\n<br><font style=\"color: red;\">SQL Query Debug --> <strong>" . $query1 . "</strong></font>\n<br><br>";
         // echo var_dump($_POST);
         // echo var_dump($_REQUEST);
 
@@ -511,6 +512,7 @@ function displayAnimalTable()
                 $transferred = $row["transferred"];
                 $parentPair = $row["breedingPair"];
                 $litterID = $row["litterID"];
+                $comments = $row["comments"];
 
                 if ($deceased == 1) {
                     $strDeceased = "Yes";
@@ -557,23 +559,23 @@ function displayAnimalTable()
                 $litterID = $row5["litterID"];
                 $parentPair = $row5["breedingPair"];
 
-                echo "<tr>\n";
-                echo "<td><input type=\"radio\" name=\"rowselect\" value=\"" . htmlspecialchars($animalID) . "\"></td>\n";
-                echo "<td>" . $animalID . "</td>\n";
-                echo "<td>" . $lastName . $firstName . "</td>\n";
-                echo "<td>" . $tagNumber . "</td>\n";
-                echo "<td>" . $species . "</td>\n";
-                echo "<td>" . $classification . "</td>\n";
-                echo "<td>" . $sex . "</td>\n";
-                echo "<td>" . $strain . "</td>\n";
-                echo "<td>" . $genotype . "</td\n>";
-                echo "<td>" . $litterID . "</td>\n";
-                echo "<td>" . $parentPair . "</td>\n";
-                echo "<td>" . $birth_date . "</td>\n";
-                echo "<td>" . $wean_date . "</td>\n";
-                echo "<td>" . $tag_date . "</td>\n";
-                echo "<td>" . $strDeceased . "</td>\n";
-                echo "<td>" . $strTransferred . "</td>\n";
+                echo "<tr title=\"Animal Notes: " . $comments . "\">\n";
+                echo "<td style=\"text-align: center;\"><input type=\"radio\" name=\"rowselect\" value=\"" . htmlspecialchars($animalID) . "\"></td>\n";
+                echo "<td style=\"text-align: center;\">" . $animalID . "</td>\n";
+                echo "<td style=\"text-align: left;\">" . $lastName . $firstName . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $tagNumber . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $species . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $classification . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $sex . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strain . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $genotype . "</td\n>";
+                echo "<td style=\"text-align: center;\">" . $litterID . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $parentPair . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $birth_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $wean_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $tag_date . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strDeceased . "</td>\n";
+                echo "<td style=\"text-align: center;\">" . $strTransferred . "</td>\n";
                 echo "</tr>\n";
             }
         }

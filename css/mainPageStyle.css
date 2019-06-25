@@ -1,16 +1,6 @@
-/* 
-html5doctor.com Reset Stylesheet
-v1.6.1
-Last Updated: 2010-09-17
-Author: Richard Clark - http://richclarkdesign.com 
-Twitter: @rich_clark
-*/
-html, body, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
-	pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
-	small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, form, label,
-	legend, caption, article, aside, canvas, details, figcaption, figure,
-	footer, header, hgroup, menu, nav, section, summary, time, mark, audio,
-	video {
+
+html, body, h1, h2, h3, h4, h5, h6, p, blockquote,
+	label, footer, header {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -31,6 +21,11 @@ div.logo {
 div.maintable {
 	padding-top: 8px;
 	padding-bottom: 14px;
+	padding-left: 4px;
+	padding-right: 4px;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	min-width: 1150px;
 }
 
 h2.maintitle {
@@ -48,15 +43,8 @@ tr {
 
 body {
 	line-height: 1;
-}
-
-article, aside, details, figcaption, figure, footer, header, hgroup,
-	menu, nav, section {
-	display: block;
-}
-
-nav ul {
-	list-style: none;
+	min-width:1160px;
+	overflow: scroll;
 }
 
 blockquote, q {
@@ -68,38 +56,6 @@ blockquote:before, blockquote:after, q:before, q:after {
 	content: none;
 }
 
-a {
-	margin: 0;
-	padding: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
-}
-
-/* change colours to suit your needs */
-ins {
-	background-color: #ff9;
-	color: #000;
-	text-decoration: none;
-}
-
-/* change colours to suit your needs */
-mark {
-	background-color: #ff9;
-	color: #000;
-	font-style: italic;
-	font-weight: bold;
-}
-
-del {
-	text-decoration: line-through;
-}
-
-abbr[title], dfn[title] {
-	border-bottom: 1px dotted;
-	cursor: help;
-}
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -109,7 +65,6 @@ td {
 	padding: 10px;
 }
 
-/* change border colour to suit your needs */
 hr {
 	display: block;
 	height: 1px;
@@ -123,16 +78,16 @@ input, select {
 	vertical-align: middle;
 }
 
-/*Mighty Mouse code*/
 header {
 	background-color: lightgrey;
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
-	height: 250px;
+	/* height: 250px; */
 	padding-bottom: 6px;
 	text-shadow: 1px, 1px, 1px, gray;
+	min-width:1160px;
 }
 
 header div table {
@@ -172,7 +127,6 @@ body div {
 	/*  min-height: 80%; */
 	/*  max-height: 83%; */
 	/* overflow: auto; */
-	
 }
 
 footer {
@@ -248,27 +202,39 @@ button.update {
 	selected {border: 1px;
 }
 
-}
+
 table.animals {
 	border-collapse: collapse;
 	border-spacing: 5px;
 	border: 1px solid black;
-	width: 100%
+	width: auto;
+	min-width:1140px;
 }
-/* table.animals tr:nth-of-type(even)  {background: #F7FFFF;} */
-/* table.animals tr:nth-of-type(odd)  {background: #F0FFFF;} */
+
 tr.animals {
 	transition: all linear 0.5s font-style: normal;
-	background-color: #FFFFFF;
+	text-align: center;
+	vertical-align: middle;
+	
+	/* background-color: #FFFFFF; */
 }
-/* tr.selected{background-color:#E0FFFF;color:#000;font-weight: bold; transition: all linear 0.5s} */
+
 th.animals {
 	text-align: center;
 	vertical-align: middle;
-	background-color: #bbbbff;
-	padding: 10px;
-	border: 1px solid black;
+	margin-top: 2px;
+	padding: 5px;
+	border: 1px dotted black;
 }
-/* td.animals 	
-    {text-align: center; vertical-align: middle; padding: 4px; border: 1px dotted gray;}
-*/
+
+
+/* @media (max-width: 600px) {
+  form.header-form input {
+    margin: 10px 0;
+  }
+
+  form.header-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+} */
